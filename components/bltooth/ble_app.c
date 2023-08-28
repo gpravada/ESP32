@@ -6,7 +6,6 @@
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
 #include "esp_event.h"
-#include "nvs_flash.h"
 #include "esp_log.h"
 #include "esp_nimble_hci.h"
 #include "modlog/modlog.h"
@@ -174,6 +173,12 @@ static int ble_gap_event(struct ble_gap_event *event, void *arg)
                     event->mtu.conn_handle,
                     event->mtu.value);
         break;
+    case BLE_GAP_EVENT_NOTIFY_RX:
+        MODLOG_DFLT(INFO, "mtu update event; conn_handle=%d mtu=%d\n",
+                    event->mtu.conn_handle,
+                    event->mtu.value);
+        break;
+
     default:
         break;
     }
@@ -240,15 +245,7 @@ void ble_init()
 {
     int rc;
 
-    /* Initialize NVS — it is used to store PHY calibration data */
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-
-    ret = nimble_port_init();
+    esp_err_t ret = nimble_port_init();
     if (ret != ESP_OK) {
         MODLOG_DFLT(INFO, "Failed to init nimble %d \n", ret);
         return;

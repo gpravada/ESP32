@@ -8,5 +8,6 @@
 void connect_wifi(void);
 int wifi_connect_status_get(void);
 httpd_handle_t setup_server(void);
+void send_data_to_thingspeak(void *pvParameters);
 
 #endif

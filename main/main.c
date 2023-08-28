@@ -41,6 +41,7 @@ void app_main(void)
 
     if (wifi_connect_status_get())
     {
+		//xTaskCreate(&send_data_to_thingspeak, "send_data_to_thingspeak", 8192, NULL, 6, NULL);
         setup_server();
         ESP_LOGI("MAIN-APP", "BME280 Web Server is up and running\n");
     }
@@ -48,7 +49,9 @@ void app_main(void)
         ESP_LOGI("MAIN-APP", "Failed to connected with Wi-Fi, check your network Credentials\n");
 
     //UART task
-    // debug_uart_init();
-    // xTaskCreate(debug_uart_rx_task, "uart_rx_task", 1024*2, NULL, configMAX_PRIORITIES, NULL);
-    // xTaskCreate(debug_uart_tx_task, "uart_tx_task", 1024*2, NULL, configMAX_PRIORITIES-1, NULL);
+#ifdef DEBUG_UART_TEST
+    debug_uart_init();
+    xTaskCreate(debug_uart_rx_task, "uart_rx_task", 1024*2, NULL, configMAX_PRIORITIES, NULL);
+    xTaskCreate(debug_uart_tx_task, "uart_tx_task", 1024*2, NULL, configMAX_PRIORITIES-1, NULL);
+#endif
 }
