@@ -35,3 +35,8 @@ Additionally, the sample project contains Makefile and component.mk files, used 
 They are not used or needed when building with CMake and idf.py.
 
 For SPI - BMP280 (https://github.com/MihaiLupoiu/esp32_bmp280/blob/master/main/main.c)
+# TODO
+WIFI Smart config
+Multi BLE connections
+Send to cloud with MQTT
+
