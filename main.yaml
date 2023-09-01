@@ -1,0 +1,20 @@
+name: Build ESP32-C3 IDF Project
+
+on:
+  push:
+    branches:
+      - develop # Adjust the branch as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build ESP32-C3 project
+        run: |
+          cd path/to/your/project # Update this to the actual path of your project
+          idf.py set-target esp32c3
+          idf.py build
