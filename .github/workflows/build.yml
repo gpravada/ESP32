@@ -39,12 +39,12 @@ jobs:
           ls -lah
           cp build/bootloader/bootloader.bin bootloader-${{ matrix.idf_ver }}.bin
           cp build/partition_table/partition-table.bin partition-table-${{ matrix.idf_ver }}.bin
-          cp build/esp32-wroom-32ue-iot.bin esp32-wroom-32ue-iot-${{ matrix.idf_ver }}.bin
+          cp build/ble-demo.bin ble-demo-${{ matrix.idf_ver }}.bin
 
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: esp32-wroom-32ue-iot_${{ matrix.idf_target }}_${{ matrix.idf_ver }}
+          name: ble-demo_${{ matrix.idf_target }}_${{ matrix.idf_ver }}
           path: "*-${{ matrix.idf_ver }}.bin"
 
   release:
